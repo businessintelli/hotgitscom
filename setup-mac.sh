@@ -196,7 +196,7 @@ setup_database() {
 setup_backend() {
     log_info "Setting up backend environment..."
     
-    cd backend
+    cd hotgigs-backend
     
     # Create virtual environment
     python3.11 -m venv venv
@@ -275,7 +275,7 @@ with app.app_context():
 setup_frontend() {
     log_info "Setting up frontend environment..."
     
-    cd frontend
+    cd hotgigs-frontend
     
     # Install dependencies
     if [[ -f package.json ]]; then
@@ -315,7 +315,7 @@ create_startup_scripts() {
     cat > start-backend.sh << 'EOF'
 #!/bin/bash
 echo "🚀 Starting Hotgigs Backend..."
-cd backend
+cd hotgigs-backend
 source venv/bin/activate
 python src/main.py
 EOF
@@ -325,7 +325,7 @@ EOF
     cat > start-frontend.sh << 'EOF'
 #!/bin/bash
 echo "🚀 Starting Hotgigs Frontend..."
-cd frontend
+cd hotgigs-frontend
 npm run dev
 EOF
     chmod +x start-frontend.sh
@@ -347,7 +347,7 @@ trap cleanup SIGINT SIGTERM EXIT
 
 # Start backend in background
 echo "Starting backend..."
-cd backend
+cd hotgigs-backend
 source venv/bin/activate
 python src/main.py &
 BACKEND_PID=$!
@@ -358,7 +358,7 @@ sleep 5
 
 # Start frontend in background
 echo "Starting frontend..."
-cd frontend
+cd hotgigs-frontend
 npm run dev &
 FRONTEND_PID=$!
 cd ..
@@ -418,14 +418,14 @@ verify_installation() {
     fi
     
     # Check backend dependencies
-    if [[ -f backend/venv/bin/activate ]]; then
+    if [[ -f hotgigs-backend/venv/bin/activate ]]; then
         log_success "✅ Backend virtual environment created"
     else
         log_error "❌ Backend virtual environment not found"
     fi
     
     # Check frontend dependencies
-    if [[ -d frontend/node_modules ]]; then
+    if [[ -d hotgigs-frontend/node_modules ]]; then
         log_success "✅ Frontend dependencies installed"
     else
         log_error "❌ Frontend dependencies not found"
@@ -474,7 +474,7 @@ main() {
     log_info "Starting Hotgigs.com macOS setup..."
     
     # Check for required directories
-    if [[ ! -d "backend" ]] || [[ ! -d "frontend" ]]; then
+    if [[ ! -d "hotgigs-backend" ]] || [[ ! -d "hotgigs-frontend" ]]; then
         log_error "Backend or frontend directory not found. Please run this script from the project root."
         exit 1
     fi
