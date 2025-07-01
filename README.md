@@ -238,7 +238,31 @@ mkdir -p uploads
 - Verify database exists and user has permissions
 - For development, SQLite is used by default (simpler setup)
 
-#### 7. Frontend Build Issues
+#### 7. Frontend Import Resolution Errors
+```
+Failed to resolve import "@/lib/utils" from "src/components/ui/radio-group.jsx"
+[plugin:vite:import-analysis] Failed to resolve import
+```
+
+**Quick Fix:**
+```bash
+# Use the automated import fix script
+./fix-frontend-imports.sh
+
+# Or manual fix:
+cd hotgigs-frontend
+rm -rf node_modules/.vite .vite
+npm install
+npm run dev
+```
+
+**Common causes:**
+- Vite cache corruption
+- Missing lib/utils.js file
+- Incorrect alias configuration in vite.config.js
+- Development server needs restart
+
+#### 8. Frontend Build Issues
 ```bash
 # Clear cache and reinstall
 rm -rf node_modules package-lock.json
