@@ -209,11 +209,36 @@ npm install --legacy-peer-deps
 ```
 
 #### 5. Database Connection Issues
-- Ensure PostgreSQL is running
+```
+sqlite3.OperationalError: unable to open database file
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) unable to open database file
+```
+
+**Quick Fix:**
+```bash
+# Use the automated database fix script
+./fix-database.sh
+
+# Or manual fix:
+cd hotgigs-backend
+# Create .env file with database configuration
+# Create uploads directory
+mkdir -p uploads
+```
+
+**Common causes:**
+- Missing .env file in backend directory
+- Missing uploads directory
+- Incorrect database path or permissions
+- Virtual environment not activated
+
+#### 6. PostgreSQL Connection Issues
+- Ensure PostgreSQL is running: `brew services list | grep postgresql`
 - Check database credentials in .env
 - Verify database exists and user has permissions
+- For development, SQLite is used by default (simpler setup)
 
-#### 6. Frontend Build Issues
+#### 7. Frontend Build Issues
 ```bash
 # Clear cache and reinstall
 rm -rf node_modules package-lock.json
