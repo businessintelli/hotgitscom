@@ -210,14 +210,15 @@ setup_backend() {
         log_info "Installing Python dependencies..."
         pip install -r requirements.txt
         
-        # Install additional ML dependencies
-        log_info "Installing ML dependencies..."
-        pip install spacy scikit-learn
-        
         # Download spaCy model
+        log_info "Downloading spaCy English model..."
         python -m spacy download en_core_web_sm
         
         log_success "Backend dependencies installed!"
+        
+        # Optional GPU setup
+        log_info "For GPU acceleration (optional), run:"
+        echo "   pip install -r requirements-gpu.txt"
     else
         log_error "requirements.txt not found in backend directory!"
         exit 1
