@@ -191,12 +191,29 @@ python -m spacy download en_core_web_sm
 pip install https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl
 ```
 
-#### 4. Database Connection Issues
+#### 4. NPM Dependency Resolution Errors
+```
+npm error ERESOLVE unable to resolve dependency tree
+npm error peer date-fns@"^2.28.0 || ^3.0.0" from react-day-picker
+```
+
+**Quick Fix:**
+```bash
+# Use the automated fix script
+./fix-frontend-deps.sh
+
+# Or manual fix:
+cd hotgigs-frontend
+rm -rf node_modules package-lock.json
+npm install --legacy-peer-deps
+```
+
+#### 5. Database Connection Issues
 - Ensure PostgreSQL is running
 - Check database credentials in .env
 - Verify database exists and user has permissions
 
-#### 5. Frontend Build Issues
+#### 6. Frontend Build Issues
 ```bash
 # Clear cache and reinstall
 rm -rf node_modules package-lock.json

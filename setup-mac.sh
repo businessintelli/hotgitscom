@@ -281,7 +281,15 @@ setup_frontend() {
     # Install dependencies
     if [[ -f package.json ]]; then
         log_info "Installing Node.js dependencies..."
-        npm install
+        
+        # Clean any existing node_modules and lock files
+        rm -rf node_modules package-lock.json pnpm-lock.yaml
+        
+        # Try npm install first
+        if ! npm install; then
+            log_warning "Standard npm install failed, trying with --legacy-peer-deps..."
+            npm install --legacy-peer-deps
+        fi
         
         log_success "Frontend dependencies installed!"
     else
