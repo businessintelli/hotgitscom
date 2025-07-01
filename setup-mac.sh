@@ -384,6 +384,14 @@ wait
 EOF
     chmod +x start-all.sh
     
+    # Copy stop-all.sh to home directory for easy access
+    if [[ -f stop-all.sh ]]; then
+        log_info "Copying stop-all.sh to home directory..."
+        cp stop-all.sh ~/stop-all.sh
+        chmod +x ~/stop-all.sh
+        log_success "stop-all.sh available in home directory"
+    fi
+    
     log_success "Startup scripts created!"
 }
 
@@ -454,6 +462,10 @@ display_instructions() {
     echo "2. Or start services individually:"
     echo "   Backend:  ./start-backend.sh"
     echo "   Frontend: ./start-frontend.sh"
+    echo ""
+    echo "3. Stop all services:"
+    echo "   ~/stop-all.sh  (from anywhere)"
+    echo "   ./stop-all.sh  (from project directory)"
     echo ""
     echo "🌐 Application URLs:"
     echo "   Frontend: http://localhost:5173"
